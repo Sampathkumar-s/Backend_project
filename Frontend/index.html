@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Login</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: linear-gradient(120deg, #6a11cb, #2575fc);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .box {
+      background: white;
+      padding: 25px;
+      width: 320px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    h2 { text-align: center; }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      background: #2575fc;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Student Register</h2>
+
+  <input id="name" placeholder="Name">
+  <input id="roll" placeholder="Roll Number">
+  <input id="password" type="password" placeholder="Password">
+  <input id="s1" placeholder="Subject 1">
+  <input id="s2" placeholder="Subject 2">
+  <input id="s3" placeholder="Subject 3">
+
+  <button onclick="register()">Register</button>
+  <button onclick="login()">Login</button>
+</div>
+
+<script>
+const API = 'http://localhost:3000/api';
+
+function register() {
+  fetch(API + '/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: name.value,
+      roll: roll.value,
+      password: password.value,
+      subjects: {
+        sub1: s1.value,
+        sub2: s2.value,
+        sub3: s3.value
+      }
+    })
+  })
+  .then(res => res.json())
+  .then(data => alert(data.message));
+}
+
+function login() {
+  fetch(API + '/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      roll: roll.value,
+      password: password.value
+    })
+  })
+  .then(res => res.json())
+  .then(data => alert(data.msg));
+}
+</script>
+
+</body>
+</html>
